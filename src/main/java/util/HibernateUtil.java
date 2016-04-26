@@ -10,18 +10,17 @@ public class HibernateUtil {
 	private static SessionFactory sessionFactory = buildSessionFactory();
 
 	private static SessionFactory buildSessionFactory() {
-		try {
-			Configuration config = new Configuration().configure();
-			
-			ServiceRegistry register = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();
-			
-			SessionFactory factory = config.buildSessionFactory(register);
-			
-			return factory;
-		} catch (Throwable ex) {
-			System.err.println("Initial SessionFactory creation failed." + ex);
-			throw new ExceptionInInitializerError(ex);
-		}
+		if (sessionFactory == null) {
+            // Loads configuration and mappings
+            Configuration configuration = new Configuration().configure();
+            ServiceRegistry serviceRegistry
+                = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
+             
+            // Builds a session factory from the service registry
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);           
+        }
+		return sessionFactory;
 	}
 	
 	public static SessionFactory getSessionFactory() {

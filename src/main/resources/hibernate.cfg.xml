@@ -30,7 +30,11 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados -->
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.auto">validade</property>
+		
+		<!-- Mapeamento -->
+		<mapping class="model.Circuit"/>
+		<mapping class="model.Race"/>
 
 	</session-factory>
 
